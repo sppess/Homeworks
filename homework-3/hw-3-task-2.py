@@ -1,0 +1,5 @@
+str1 = input("Enter your sentence: ")
+str2 = input("Enter the word that you want to count: ")
+low_str1 = str1.lower()
+split_low_str1 = low_str1.split()
+print(split_low_str1.count(str2))
