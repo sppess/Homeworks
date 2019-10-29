@@ -5,7 +5,6 @@
 # Extra point for doing it using built-in csv library
 # Extra point for doing it using 3rd party library pandas
 
-import csv
 from abc import ABC
 
 
@@ -25,13 +24,17 @@ class Boss(Person):
         return f"Boss-{self.id}: {self.name}, {self.company}"
 
     def dump_workers(self):
-        with open('files/new_workers_file.csv', 'w') as file:
-            file.write('id_,name,company,boss_id\n')
-            for index, worker in enumerate(workers):
-                file.write(f"{workers[index].id},"
-                           f"{workers[index].name},"
-                           f"{workers[index].company},"
-                           f"{workers[index]._boss.id}\n")
+        with open('files/new_worker_file.csv', 'r') as file:
+            if 'id_,name,company,boss_id' not in (file.read()):
+                with open('files/new_worker_file.csv', 'w') as file:
+                    file.write('id_,name,company,boss_id\n')
+
+        with open('files/new_worker_file.csv', 'a') as file:
+            for worker in self.workers:
+                file.write(f"{worker.id},"
+                           f"{worker.name},"
+                           f"{worker.company},"
+                           f"{worker._boss.id}\n")
 
 
 class Worker(Person):
@@ -72,5 +75,6 @@ with open('workers.csv', 'r') as file1:
         id_, name, company, boss_id = worker.split(',')
         workers.append(Worker(id_, name, company, bosses[int(boss_id)]))
 
-print(workers)
-bosses[0].dump_workers()
+print(bosses[1])
+bosses[3].dump_workers()
+bosses[2].dump_workers()
